@@ -20,3 +20,19 @@ def criar_tabela():
             cursor.close()
             conexao.close()
 criar_tabela()
+
+def inserir_filme(titulo, genero, ano, avaliacao):
+    conexao, cursor = conectar()
+    if conexao:
+        try:
+            cursor.execute(
+                "INSERT INTO filmes (titulo, genero, ano, avaliacao) VALUES (%s, %s, %s, %s)",
+                (titulo, genero, ano, avaliacao)
+            )
+            conexao.commit()
+        except Exception as erro:
+            print(f"Erro ao inserir filme {erro}")
+        finally:
+            cursor.close()
+            conexao.close()
+inserir_filme("avatar", "ação", 2009, 10.0)
