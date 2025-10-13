@@ -38,3 +38,4 @@ def listar_filmes():
             "ano": filme[3], 
             "avaliacao": filme[4]})
     return {"filmes": lista}
+
