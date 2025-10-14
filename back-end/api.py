@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from funcao import listar_filme, deletar_filmes, criar_tabela, inserir_filme, atualizar_filme
+from funcao import listar_filme, deletar_filmes, criar_tabela, inserir_filme, atualizar_filme, buscar_filme
 
 # Rodar o fastapi:
 # python -m uvicorn api:app --reload
@@ -19,7 +19,7 @@ app = FastAPI(title="Gerenciador de filmes")
 # 127.0.0.1:8000
 @app.get("/")
 def home():
-    return{"mensagem": "Quero café prof"}
+    return{"mensagem": "Bem vindo ao Gerenciador de Filmes"}
 
 @app.post("/filmes")
 def criar_filmes(titulo: str, genero: str, ano: int, avaliacao: float):
@@ -39,3 +39,11 @@ def listar_filmes():
             "avaliacao": filme[4]})
     return {"filmes": lista}
 
+@app.put("/filmes")
+def atualizar_filmes(id_filme: int, nova_avaliacao: float):
+    filme = atualizar_filme(id_filme)
+    if filme:
+        buscar_filme(id_filme, nova_avaliacao)
+        return {"mensagem": "Filme atualizado ✔"}
+    else:
+        return{"erro": "Filme não atualizado"}
